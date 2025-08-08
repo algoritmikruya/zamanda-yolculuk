@@ -190,67 +190,6 @@
             color: #ccc;
         }
 
-        /* Forum bölümü stilleri */
-        .forum-section {
-            background-color: #f9f9f9;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .forum-message {
-            background-color: #e0e7ff; /* Açık mavi */
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
-            word-wrap: break-word; /* Uzun kelimeleri keser */
-        }
-        .forum-message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        .forum-message-user {
-            font-weight: bold;
-            color: #4a5568; /* Koyu gri */
-            font-size: 0.9rem;
-        }
-        .forum-message-time {
-            font-size: 0.8rem;
-            color: #718096; /* Orta gri */
-        }
-        .forum-message-text {
-            color: #2d3748; /* Çok koyu gri */
-            line-height: 1.5;
-        }
-        .forum-input-area {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-        .forum-input-area textarea {
-            width: 100%;
-            min-height: 80px;
-            padding: 0.75rem;
-            border: 1px solid #cbd5e0;
-            border-radius: 0.5rem;
-            resize: vertical;
-            font-size: 1rem;
-        }
-        .forum-submit-button {
-            background-color: #4c51bf; /* Koyu mor */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease-in-out;
-        }
-        .forum-submit-button:hover {
-            background-color: #5a67d8; /* Daha açık mor */
-        }
-
         /* About Modal Stilleri */
         .about-modal {
             display: none; /* Varsayılan olarak gizli */
@@ -360,12 +299,58 @@
             from {transform: scale(0)}
             to {transform: scale(1)}
         }
+        /* Modal içindeki link ve buton stilleri */
+        .modal-link-style {
+            color: #4c51bf; /* Koyu mor */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out;
+        }
+        .modal-link-style:hover {
+            color: #5a67d8; /* Daha açık mor */
+        }
+        .modal-back-button {
+            background-color: #4b5563; /* Koyu gri */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease-in-out;
+            margin-top: 2rem;
+            display: inline-block; /* Butonun ortalanması için */
+        }
+        .modal-back-button:hover {
+            background-color: #6b7280; /* Daha açık gri */
+        }
+
+        /* Language Toggle Style */
+        .language-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 20; /* Ensure it's above other header elements */
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.875rem; /* Smaller font size */
+        }
+        .language-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header Section -->
     <header class="relative py-20 px-4 text-center rounded-b-lg shadow-md overflow-hidden">
+        <!-- Language Toggle -->
+        <div id="languageToggle" class="language-toggle" onclick="window.toggleLanguage()">TR / ENG</div>
+
         <!-- Header görselinin kapsayıcısı -->
         <div class="header-image-container">
             <div class="header-image-wrapper">
@@ -380,9 +365,9 @@
 
         <!-- Başlık ve alt yazılar -->
         <div class="header-content text-white">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">KOSTÜM VE MİMARİ TARİHİ</h1>
-            <p class="text-xl md:text-2xl italic mb-2 drop-shadow-md">Dikiş Makinasından, Zaman Makinasına</p>
-            <p class="text-lg md:text-xl font-semibold drop-shadow-md">Tarihe Tıkla ▶ Keşfet ▶ Sen de Ekle</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg" data-lang-key="headerTitle">KOSTÜM VE MİMARİ TARİHİ</h1>
+            <p class="text-xl md:text-2xl italic mb-2 drop-shadow-md" data-lang-key="headerSubtitle">Dikiş Makinasından, Zaman Makinasına</p>
+            <p class="text-lg md:text-xl font-semibold drop-shadow-md" data-lang-key="headerCallToAction">Tarihe Tıkla ▶ Keşfet ▶ Sen de Ekle</p>
         </div>
     </header>
 
@@ -391,7 +376,7 @@
 
         <!-- Historical Periods Section -->
         <section class="mb-16">
-            <h2 class="text-4xl font-bold text-center mb-10 text-gray-800">TARİHSEL DÖNEMLER</h2>
+            <h2 class="text-4xl font-bold text-center mb-10 text-gray-800" data-lang-key="periodsTitle">TARİHSEL DÖNEMLER</h2>
             <div class="grid grid-cols-1 gap-8"> <!-- Her dönem kendi satırında olacak -->
 
                 <!-- Paleolitik Çağ -->
@@ -404,8 +389,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Paleolitik Çağ ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">PALEOLİTİK ÇAĞ</h3>
-                        <p class="text-sm text-gray-500">MÖ 2.5 milyon - MÖ 10.000</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="paleolithicTitle">PALEOLİTİK ÇAĞ</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="paleolithicDate">MÖ 2.5 milyon - MÖ 10.000</p>
                     </div>
                     <div id="paleolithic-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -420,8 +405,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Antik Mısır ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">ANTİK MISIR</h3>
-                        <p class="text-sm text-gray-500">MÖ 3100 - MÖ 30</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="ancientEgyptTitle">ANTİK MISIR</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="ancientEgyptDate">MÖ 3100 - MÖ 30</p>
                     </div>
                     <div id="ancientEgypt-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -436,8 +421,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Roma İmparatorluğu ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">ROMA İMPARATORLUĞU</h3>
-                        <p class="text-sm text-gray-500">MÖ 27 - MS 476</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="romanEmpireTitle">ROMA İMPARATORLUĞU</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="romanEmpireDate">MÖ 27 - MS 476</p>
                     </div>
                     <div id="romanEmpire-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -452,8 +437,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Orta Çağ ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">ORTA ÇAĞ</h3>
-                        <p class="text-sm text-gray-500">MS 476 - 1453</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="middleAgesTitle">ORTA ÇAĞ</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="middleAgesDate">MS 476 - 1453</p>
                     </div>
                     <div id="middleAges-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -468,8 +453,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Rönesans ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">RÖNESANS</h3>
-                        <p class="text-sm text-gray-500">14. - 16. Yüzyıl</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="renaissanceTitle">RÖNESANS</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="renaissanceDate">14. - 16. Yüzyıl</p>
                     </div>
                     <div id="renaissance-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -484,8 +469,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Barok ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">BAROK</h3>
-                        <p class="text-sm text-gray-500">1600 - 1750</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="baroqueTitle">BAROK</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="baroqueDate">1600 - 1750</p>
                     </div>
                     <div id="baroque-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -500,8 +485,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Rokoko ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">ROKOKO</h3>
-                        <p class="text-sm text-gray-500">1720 - 1770</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="rococoTitle">ROKOKO</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="rococoDate">1720 - 1770</p>
                     </div>
                     <div id="rococo-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -516,8 +501,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Fransız İhtilali ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">FRANSIZ İHTİLALİ VE REGENCE</h3>
-                        <p class="text-sm text-gray-500">1789 - 1815</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="frenchRevolutionTitle">FRANSIZ İHTİLALİ VE REGENCE</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="frenchRevolutionDate">1789 - 1815</p>
                     </div>
                     <div id="frenchRevolution-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -532,8 +517,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Viktorya ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">VİKTORYA</h3>
-                        <p class="text-sm text-gray-500">1837 - 1901</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="victorianTitle">VİKTORYA</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="victorianDate">1837 - 1901</p>
                     </div>
                     <div id="victorian-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -548,8 +533,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Art Nouveau ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">ART NOUVEAU / BELLE EPOQUE</h3>
-                        <p class="text-sm text-gray-500">1890 - 1914</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="artNouveauTitle">ART NOUVEAU / BELLE EPOQUE</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="artNouveauDate">1890 - 1914</p>
                     </div>
                     <div id="artNouveau-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -564,8 +549,8 @@
                                  class="circular-icon"
                                  onerror="console.error('1920ler ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">1920'ler</h3>
-                        <p class="text-sm text-gray-500">1920 - 1929</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="1920sTitle">1920'ler</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="1920sDate">1920 - 1929</p>
                     </div>
                     <div id="1920s-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -580,8 +565,8 @@
                                  class="circular-icon"
                                  onerror="console.error('1940lar ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">1940'lar</h3>
-                        <p class="text-sm text-gray-500">1940 - 1949</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="1940sTitle">1940'lar</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="1940sDate">1940 - 1949</p>
                     </div>
                     <div id="1940s-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -596,8 +581,8 @@
                                  class="circular-icon"
                                  onerror="console.error('1950ler ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">1950'ler</h3>
-                        <p class="text-sm text-gray-500">1950 - 1959</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="1950sTitle">1950'ler</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="1950sDate">1950 - 1959</p>
                     </div>
                     <div id="1950s-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -612,8 +597,8 @@
                                  class="circular-icon"
                                  onerror="console.error('1970ler ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">1970'ler</h3>
-                        <p class="text-sm text-gray-500">1970 - 1979</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="1970sTitle">1970'ler</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="1970sDate">1970 - 1979</p>
                     </div>
                     <div id="1970s-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -628,8 +613,8 @@
                                  class="circular-icon"
                                  onerror="console.error('1980ler ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">1980'ler</h3>
-                        <p class="text-sm text-gray-500">1980 - 1989</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="1980sTitle">1980'ler</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="1980sDate">1980 - 1989</p>
                     </div>
                     <div id="1980s-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -641,8 +626,8 @@
                             <!-- [21. YY İkonu] -->
                             <img src="https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/kapak.jpeg" alt="[21. YY İkonu]" class="circular-icon" onerror="console.error('21. YY ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">21. YY</h3>
-                        <p class="text-sm text-gray-500">2000 - Günümüz</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="21stCenturyTitle">21. YY</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="21stCenturyDate">2000 - Günümüz</p>
                     </div>
                     <div id="21stCentury-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -657,8 +642,8 @@
                                  class="circular-icon"
                                  onerror="console.error('Gelecek YY ikon görseli yüklenemedi: ' + this.src)">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">GELECEK YY</h3>
-                        <p class="text-sm text-gray-500">2050 - ...</p>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="futureCenturyTitle">GELECEK YY</h3>
+                        <p class="text-sm text-gray-500" data-lang-key="futureCenturyDate">2050 - ...</p>
                     </div>
                     <div id="futureCentury-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -672,7 +657,7 @@
                                  alt="[Yakında İkonu]"
                                  class="circular-icon">
                         </div>
-                        <h3 class="text-3xl font-semibold mb-2 text-gray-700">YAKINDA</h3>
+                        <h3 class="text-3xl font-semibold mb-2 text-gray-700" data-lang-key="soonTitle">YAKINDA</h3>
                     </div>
                     <div id="soon-details-section" class="period-details-section w-full max-w-4xl mx-auto"></div>
                 </div>
@@ -682,34 +667,18 @@
 
     </main>
 
-    <!-- Global Forum Section -->
-    <section class="container mx-auto py-12 px-4 forum-section">
-        <h2 class="text-2xl font-bold text-center mb-10 text-gray-800">PAYLAŞIM PLATFORMU</h2>
-        <div id="global-forum-messages" class="forum-messages-container max-h-96 overflow-y-auto mb-4 p-2 border border-gray-200 rounded-md bg-white">
-            <p class="text-gray-500 text-center">Mesajlar yükleniyor...</p>
-        </div>
-        <div class="forum-input-area">
-            <textarea id="global-forum-input" placeholder="Buraya mesajınızı yazın..." class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-            <button onclick="window.addGlobalForumPost()" class="forum-submit-button">Gönder</button>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6 text-center mt-12 rounded-t-lg shadow-inner relative">
-        <!-- Ziyaretçi Sayısı Bölümü -->
-        <div class="absolute top-2 right-4 text-xs text-gray-400"> <!-- text-xs sınıfı eklendi -->
-            Ziyaretçiler: <span id="visitor-count" class="font-bold text-white">0</span>
-        </div>
         <!-- Müzik çalar ve başlığı için kapsayıcı -->
         <div class="audio-container">
-            <p class="audio-text">Echos of Time</p>
+            <p class="audio-text" data-lang-key="audioText">Echos of Time</p>
             <audio controls class="audio-player">
                 <source src="https://github.com/algoritmikruya/muziklerim/raw/refs/heads/main/echosoftime.AAC" type="audio/aac">
-                Tarayıcınız ses öğesini desteklemiyor.
+                <span data-lang-key="audioNotSupported">Tarayıcınız ses öğesini desteklemiyor.</span>
             </audio>
         </div>
         <p class="text-sm">
-            &copy; 2025 Fikir ve Tasarım: Şebnem İlker
+            <span data-lang-key="footerCopyright">&copy; 2025 Fikir ve Tasarım: Şebnem İlker</span>
             <span class="social-icons block mt-2">
                 <a href="https://www.youtube.com/@Algoritmikruya" target="_blank" aria-label="YouTube Kanalı">
                     <i class="fab fa-youtube"></i>
@@ -717,7 +686,7 @@
                 <a href="https://www.instagram.com/sebnemilker/" target="_blank" aria-label="Instagram Sayfası">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <!-- Yeni raptiye ikonu -->
+                <!-- Hakkında sayfası için kırmızı iğne ikonu -->
                 <a href="#" onclick="window.openAboutModal(); return false;" aria-label="Hakkında">
                     <i class="fas fa-thumbtack" style="color: #dc2626;"></i> <!-- Kırmızı raptiye ikonu -->
                 </a>
@@ -725,61 +694,56 @@
         </p>
     </footer>
 
-    <!-- About Modal -->
-    <div id="aboutModal" class="about-modal">
-        <div class="about-modal-content">
-            <span class="about-modal-close" onclick="window.closeAboutModal()">&times;</span>
-            <h3 class="text-2xl font-bold mb-4 text-gray-800">Şebnem İlker – Sanatın Zamansız Yolcusu</h3>
-            <p class="text-gray-700 mb-4 leading-relaxed">
-                Mimar Sinan Üniversitesi Güzel Sanatlar Fakültesi'nde aldığı Sahne Sanatları ve Dramaturji eğitimini yılların sahne deneyimiyle birleştiren bir sanat tutkunu. Geleneksel ve modern sanat formları arasında köprü kuran özgün çalışmalarıyla, görsel anlatımın sınırlarını teknolojiyle genişletiyor.
-            </p>
-            <p class="text-gray-700 mb-6 leading-relaxed">
-                Dizi ve film yapımcılığından yapay zeka destekli projelere uzanan yolculuğunda, sanatı geleceğe taşımak için yeni ifade biçimleri keşfediyor. Burada, geçmişin ruhunu, geleceğin teknolojisiyle buluşturuyor ve sanatın dönüştürücü gücüne inancını paylaşıyor.
-            </p>
-            <a href="https://www.imdb.com/name/nm3248058/" target="_blank" class="text-blue-600 hover:underline font-semibold">
-                IMDb Profili
-            </a>
-        </div>
-    </div>
-
     <!-- Fullscreen Image Modal -->
     <div id="fullscreenImageModal" class="fullscreen-modal">
         <span class="fullscreen-close" onclick="window.closeImageFullscreen()">&times;</span>
         <img class="fullscreen-content" id="fullscreenImage">
     </div>
 
+    <!-- About Modal -->
+    <div id="aboutModal" class="about-modal">
+        <div class="about-modal-content">
+            <span class="about-modal-close" onclick="window.closeAboutModal()">&times;</span>
+            <h1 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800" data-lang-key="aboutModalTitle">Şebnem İlker – Sanatın Zamansız Yolcusu</h1>
+            <p class="text-gray-700 mb-4 leading-relaxed" data-lang-key="aboutModalParagraph1">
+                Mimar Sinan Üniversitesi Güzel Sanatlar Fakültesi'nde aldığı Sahne Sanatları ve Dramaturji eğitimini, yılların sahne ve televizyon deneyimiyle birleştiren bir sanat tutkunu. Geleneksel ve modern sanat formları arasında köprü kuran özgün çalışmalarıyla, görsel anlatımın sınırlarını teknolojiyle genişletiyor.
+            </p>
+            <p class="text-gray-700 mb-6 leading-relaxed" data-lang-key="aboutModalParagraph2">
+                Dizi ve film yapımcılığından yapay zeka destekli projelere uzanan yolculuğunda, sanatı geleceğe taşımak için yeni ifade biçimleri aramaya ve keşfetmeye devam ediyor. Burada, geçmişin ruhunu, geleceğin teknolojisiyle buluştururken, sanatın dönüştürücü gücüne inancını paylaşıyor.
+            </p>
+            <a href="https://www.imdb.com/name/nm3248058/" target="_blank" class="modal-link-style text-lg" data-lang-key="imdbProfile">
+                IMDb Profili
+            </a>
+            <p class="text-gray-500 mt-6 text-sm" data-lang-key="aboutModalCopyright">
+                &copy; 2025 Şebnem İlker. Tüm hakları saklıdır.
+            </p>
+            <button onclick="window.closeAboutModal()" class="modal-back-button" data-lang-key="backButton">Geri Dön</button>
+        </div>
+    </div>
+
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, updateDoc, increment, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Configuration (provided globally by Canvas environment)
+        // Firebase Configuration (Canvas ortamı tarafından global olarak sağlanır)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
 
         let app;
-        let db;
         let auth;
-        // userId'yi window objesine taşıyalım ki global olarak erişilebilir olsun
-        window.userId = 'anon-user'; // Default anonymous user ID
-        let isAuthReady = false;
-        let visitorCountInitialized = false; // Ziyaretçi sayacının bir kez çalışmasını sağlamak için bayrak
 
-        // Initialize Firebase and authenticate
+        // Firebase'i başlatma ve kimlik doğrulama fonksiyonu
         async function initializeFirebase() {
             try {
                 app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
                 auth = getAuth(app);
 
-                // Listen for auth state changes
+                // Auth durumu değişikliklerini dinle
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
-                        window.userId = user.uid;
-                        console.log("Firebase Auth Ready. User ID:", window.userId);
+                        console.log("Firebase Auth Ready. User ID:", user.uid);
                     } else {
-                        // Sign in anonymously if no user is logged in
                         try {
                             const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
                             if (initialAuthToken) {
@@ -787,18 +751,10 @@
                             } else {
                                 await signInAnonymously(auth);
                             }
-                            window.userId = auth.currentUser.uid;
-                            console.log("Signed in anonymously. User ID:", window.userId);
+                            console.log("Signed in anonymously. User ID:", auth.currentUser.uid);
                         } catch (error) {
                             console.error("Anonymous sign-in failed:", error);
                         }
-                    }
-                    isAuthReady = true;
-                    // Load global forum posts after auth is ready
-                    window.loadGlobalForumPosts();
-                    // Ziyaretçi sayacını Firebase hazır olduğunda ve sadece bir kez güncelle
-                    if (!visitorCountInitialized) {
-                        updateVisitorCount();
                     }
                 });
             } catch (error) {
@@ -806,74 +762,103 @@
             }
         }
 
-        // Call Firebase initialization
+        // Firebase başlatma fonksiyonunu çağır
         initializeFirebase();
 
-        let unsubscribeGlobalForum = null; // To store the Firestore unsubscribe function for the global forum
+        // --- Language Management ---
+        let currentLanguage = 'tr'; // Default language is Turkish
 
-        // Ziyaretçi sayısını güncelleyen ve gösteren fonksiyon
-        async function updateVisitorCount() {
-            if (!db || !isAuthReady || visitorCountInitialized) {
-                console.warn("Firestore veya kimlik doğrulama henüz hazır değil veya ziyaretçi sayısı zaten güncellendi.");
-                return;
-            }
+        // Translations object for static texts
+        const translations = {
+            headerTitle: {
+                tr: "KOSTÜM VE MİMARİ TARİHİ",
+                en: "COSTUME AND ARCHITECTURE HISTORY"
+            },
+            headerSubtitle: {
+                tr: "Dikiş Makinasından, Zaman Makinasına",
+                en: "From Sewing Machine to Time Machine"
+            },
+            headerCallToAction: {
+                tr: "Tarihe Tıkla ▶ Keşfet ▶ Sen de Ekle",
+                en: "Click History ▶ Explore ▶ Add Yours"
+            },
+            periodsTitle: {
+                tr: "TARİHSEL DÖNEMLER",
+                en: "HISTORICAL PERIODS"
+            },
+            // Period titles and dates
+            paleolithicTitle: { tr: "PALEOLİTİK ÇAĞ", en: "PALEOLITHIC AGE" },
+            paleolithicDate: { tr: "MÖ 2.5 milyon - MÖ 10.000", en: "2.5 million BC - 10,000 BC" },
+            ancientEgyptTitle: { tr: "ANTİK MISIR", en: "ANCIENT EGYPT" },
+            ancientEgyptDate: { tr: "MÖ 3100 - MÖ 30", en: "3100 BC - 30 BC" },
+            romanEmpireTitle: { tr: "ROMA İMPARATORLUĞU", en: "ROMAN EMPIRE" },
+            romanEmpireDate: { tr: "MÖ 27 - MS 476", en: "27 BC - 476 AD" },
+            middleAgesTitle: { tr: "ORTA ÇAĞ", en: "MIDDLE AGES" },
+            middleAgesDate: { tr: "MS 476 - 1453", en: "476 AD - 1453 AD" },
+            renaissanceTitle: { tr: "RÖNESANS", en: "RENAISSANCE" },
+            renaissanceDate: { tr: "14. - 16. Yüzyıl", en: "14th - 16th Century" },
+            baroqueTitle: { tr: "BAROK", en: "BAROQUE" },
+            baroqueDate: { tr: "1600 - 1750", en: "1600 - 1750" },
+            rococoTitle: { tr: "ROKOKO", en: "ROCOCO" },
+            rococoDate: { tr: "1720 - 1770", en: "1720 - 1770" },
+            frenchRevolutionTitle: { tr: "FRANSIZ İHTİLALİ VE REGENCE", en: "FRENCH REVOLUTION AND REGENCE" },
+            frenchRevolutionDate: { tr: "1789 - 1815", en: "1789 - 1815" },
+            victorianTitle: { tr: "VİKTORYA", en: "VICTORIAN" },
+            victorianDate: { tr: "1837 - 1901", en: "1837 - 1901" },
+            artNouveauTitle: { tr: "ART NOUVEAU / BELLE EPOQUE", en: "ART NOUVEAU / BELLE EPOQUE" },
+            artNouveauDate: { tr: "1890 - 1914", en: "1890 - 1914" },
+            '1920sTitle': { tr: "1920'ler", en: "1920s" },
+            '1920sDate': { tr: "1920 - 1929", en: "1920 - 1929" },
+            '1940sTitle': { tr: "1940'lar", en: "1940s" },
+            '1940sDate': { tr: "1940 - 1949", en: "1940 - 1949" },
+            '1950sTitle': { tr: "1950'ler", en: "1950s" },
+            '1950sDate': { tr: "1950 - 1959", en: "1950 - 1959" },
+            '1970sTitle': { tr: "1970'ler", en: "1970s" },
+            '1970sDate': { tr: "1970 - 1979", en: "1970 - 1979" },
+            '1980sTitle': { tr: "1980'ler", en: "1980s" },
+            '1980sDate': { tr: "1980 - 1989", en: "1980 - 1989" },
+            '21stCenturyTitle': { tr: "21. YY", en: "21st CENTURY" },
+            '21stCenturyDate': { tr: "2000 - Günümüz", en: "2000 - Present" },
+            futureCenturyTitle: { tr: "GELECEK YY", en: "FUTURE CENTURY" },
+            futureCenturyDate: { tr: "2050 - ...", en: "2050 - ..." },
+            soonTitle: { tr: "YAKINDA", en: "COMING SOON" },
 
-            const visitorCountRef = doc(db, `artifacts/${appId}/public/data/site_analytics/visitor_count`);
-            const visitorCountElement = document.getElementById('visitor-count');
+            // Footer texts
+            audioText: { tr: "Echos of Time", en: "Echos of Time" },
+            audioNotSupported: { tr: "Tarayıcınız ses öğesini desteklemiyor.", en: "Your browser does not support the audio element." },
+            footerCopyright: { tr: "&copy; 2025 Fikir ve Tasarım: Şebnem İlker", en: "&copy; 2025 Idea and Design: Şebnem İlker" },
 
-            try {
-                const docSnap = await getDoc(visitorCountRef);
+            // About Modal Texts
+            aboutModalTitle: { tr: "Şebnem İlker – Sanatın Zamansız Yolcusu", en: "Şebnem İlker – Timeless Traveler of Art" },
+            aboutModalParagraph1: {
+                tr: "Mimar Sinan Üniversitesi Güzel Sanatlar Fakültesi'nde aldığı Sahne Sanatları ve Dramaturji eğitimini, yılların sahne ve televizyon deneyimiyle birleştiren bir sanat tutkunu. Geleneksel ve modern sanat formları arasında köprü kuran özgün çalışmalarıyla, görsel anlatımın sınırlarını teknolojiyle genişletiyor.",
+                en: "A passionate artist who combines her Stage Arts and Dramaturgy education from Mimar Sinan Fine Arts University with years of stage and television experience. With her unique works bridging traditional and modern art forms, she expands the boundaries of visual storytelling with technology."
+            },
+            aboutModalParagraph2: {
+                tr: "Dizi ve film yapımcılığından yapay zeka destekli projelere uzanan yolculuğunda, sanatı geleceğe taşımak için yeni ifade biçimleri aramaya ve keşfetmeye devam ediyor. Burada, geçmişin ruhunu, geleceğin teknolojisiyle buluştururken, sanatın dönüştürücü gücüne inancını paylaşıyor.",
+                en: "In her journey from TV series and film production to AI-powered projects, she continues to seek and discover new forms of expression to carry art into the future. Here, she shares her belief in the transformative power of art, bringing together the spirit of the past with the technology of the future."
+            },
+            imdbProfile: { tr: "IMDb Profili", en: "IMDb Profile" },
+            aboutModalCopyright: { tr: "&copy; 2025 Şebnem İlker. Tüm hakları saklıdır.", en: "&copy; 2025 Şebnem İlker. All rights reserved." },
+            backButton: { tr: "Geri Dön", en: "Go Back" },
+            changeImageButton: { tr: "Görseli Değiştir", en: "Change Image" },
+            imageNotFound: { tr: "Görsel Yok", en: "Image Not Found" },
+            imageLoadError: { tr: "Görsel Yüklenemedi", en: "Image Failed to Load" }
+        };
 
-                if (docSnap.exists()) {
-                    // Belge varsa, sayacı bir artır
-                    await updateDoc(visitorCountRef, {
-                        count: increment(1)
-                    });
-                } else {
-                    // Belge yoksa, 1 ile yeni bir belge oluştur
-                    await setDoc(visitorCountRef, { count: 1 });
-                }
-
-                // Sayacın gerçek zamanlı güncellemelerini dinle
-                onSnapshot(visitorCountRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        const currentCount = snapshot.data().count;
-                        if (visitorCountElement) {
-                            visitorCountElement.textContent = currentCount.toLocaleString('tr-TR');
-                        }
-                    } else {
-                        console.warn("Ziyaretçi sayısı belgesi beklenmedik şekilde silindi.");
-                        if (visitorCountElement) {
-                            visitorCountElement.textContent = '0';
-                        }
-                    }
-                }, (error) => {
-                    console.error("Ziyaretçi sayısı yüklenirken hata oluştu:", error);
-                    if (visitorCountElement) {
-                        visitorCountElement.textContent = 'Hata!';
-                    }
-                });
-
-                visitorCountInitialized = true; // Sayaç başarıyla başlatıldı
-            } catch (e) {
-                console.error("Ziyaretçi sayısı güncellenirken hata oluştu: ", e);
-                if (visitorCountElement) {
-                    visitorCountElement.textContent = 'Hata!';
-                }
-            }
-        }
-
-
-        // Dönem detayları için veri yapısı
+        // Dönem detayları için veri yapısı (Şimdi her metin için TR ve EN versiyonlarını içeriyor)
         const periodData = {
             paleolithic: {
-                title: "Paleolitik Çağ (Eski Taş Çağı)",
-                description: "Paleolitik Çağ, insanlık tarihinin en uzun dönemidir ve avcı-toplayıcı yaşam tarzıyla karakterize edilir. Bu dönemde giyim, temel olarak hayatta kalma ve çevresel koşullardan korunma amacına hizmet etmiştir. Giysiler, avlanan hayvanların derilerinden, kürklerinden ve bitkisel liflerden yapılırdı. Dikiş teknikleri ilkeldi ve genellikle kemik iğneleri veya sivri taşlar kullanılarak deriler bir araya getirilirdi. Giysilerin estetik kaygılardan çok pratik ihtiyaçlara yönelik olduğu bu dönemde, süslemeler doğal malzemelerle (kabuklar, dişler, kemikler) sınırlıydı.",
+                title: { tr: "Paleolitik Çağ (Eski Taş Çağı)", en: "Paleolithic Age (Old Stone Age)" },
+                description: {
+                    tr: "Paleolitik Çağ, insanlık tarihinin en uzun dönemidir ve avcı-toplayıcı yaşam tarzıyla karakterize edilir. Bu dönemde giyim, temel olarak hayatta kalma ve çevresel koşullardan korunma amacına hizmet etmiştir. Giysiler, avlanan hayvanların derilerinden, kürklerinden ve bitkisel liflerden yapılırdı. Dikiş teknikleri ilkeldi ve genellikle kemik iğneleri veya sivri taşlar kullanılarak deriler bir araya getirilirdi. Giysilerin estetik kaygılardan çok pratik ihtiyaçlara yönelik olduğu bu dönemde, süslemeler doğal malzemelerle (kabuklar, dişler, kemikler) sınırlıydı.",
+                    en: "The Paleolithic Age is the longest period in human history, characterized by a hunter-gatherer lifestyle. Clothing during this period primarily served the purpose of survival and protection from environmental conditions. Garments were made from the skins, furs, and plant fibers of hunted animals. Sewing techniques were rudimentary, typically using bone needles or sharp stones to join hides. In this era, clothing was driven by practical needs rather than aesthetic concerns, and ornamentation was limited to natural materials (shells, teeth, bones)."
+                },
                 subSections: [
                     {
                         id: "paleolithic-woman",
-                        title: "Kadın Kostümü",
-                        description: "Hayvan derilerinden yapılmış basit yapılar ve kemik süslemeleri kullanılırdı.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Hayvan derilerinden yapılmış basit yapılar ve kemik süslemeleri kullanılırdı.", en: "Simple structures made of animal skins and bone ornaments were used." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/kadin-2.jpeg",
@@ -885,8 +870,8 @@
                     },
                     {
                         id: "paleolithic-man",
-                        title: "Erkek Kostümü",
-                        description: "Avcılık için uygun deri giysiler ve silah aksesuarları.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Avcılık için uygun deri giysiler ve silah aksesuarları.", en: "Leather garments and weapon accessories suitable for hunting." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/erkek-2.jpeg",
@@ -899,8 +884,8 @@
                     },
                     {
                         id: "paleolithic-hunter",
-                        title: "Avcı / Savaşçı Kostümü",
-                        description: "Av ve savaş için özelleşmiş deri zırhlar ve koruyucu giysiler.",
+                        title: { tr: "Avcı / Savaşçı Kostümü", en: "Hunter / Warrior Costume" },
+                        description: { tr: "Av ve savaş için özelleşmiş deri zırhlar ve koruyucu giysiler.", en: "Specialized leather armor and protective clothing for hunting and warfare." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/avci-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/avci-2.jpeg",
@@ -911,8 +896,8 @@
                     },
                     {
                         id: "paleolithic-architecture",
-                        title: "Mimari Temeller",
-                        description: "Mağaralar, kaya sığınakları ve basit kulübeler dönemin başlıca barınma yapılarıydı. Mimari, temel ihtiyaçlara yönelikti ve doğal malzemeler kullanılırdı.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Mağaralar, kaya sığınakları ve basit kulübeler dönemin başlıca barınma yapılarıydı. Mimari, temel ihtiyaçlara yönelikti ve doğal malzemeler kullanılırdı.", en: "Caves, rock shelters, and simple huts were the primary dwelling structures of the period. Architecture was focused on basic needs and utilized natural materials." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/paleolitik/mimari-2.jpeg",
@@ -923,13 +908,16 @@
                 ]
             },
             ancientEgypt: {
-                title: "Antik Mısır",
-                description: "Antik Mısır medeniyeti, Nil Nehri çevresinde gelişmiş ve kendine özgü kostüm ve mimari tarzlarıyla tanınmıştır. Kostümler, genellikle keten kumaşlardan yapılmış, hafif ve iklime uygun tasarımlara sahipti. Mimari ise anıtsal piramitler, tapınaklar ve heykellerle öne çıkmıştır.",
+                title: { tr: "Antik Mısır", en: "Ancient Egypt" },
+                description: {
+                    tr: "Antik Mısır medeniyeti, Nil Nehri çevresinde gelişmiş ve kendine özgü kostüm ve mimari tarzlarıyla tanınmıştır. Kostümler, genellikle keten kumaşlardan yapılmış, hafif ve iklime uygun tasarımlara sahipti. Mimari ise anıtsal piramitler, tapınaklar ve heykellerle öne çıkmıştır.",
+                    en: "Ancient Egyptian civilization flourished around the Nile River and is known for its distinctive costume and architectural styles. Costumes were generally made from linen fabrics, with light and climate-appropriate designs. Architecture, on the other hand, stood out with monumental pyramids, temples, and sculptures."
+                },
                 subSections: [
                     {
                         id: "egypt-woman",
-                        title: "Kadın Kostümü",
-                        description: "Kalasiris (uzun keten elbise) ve altın takılar.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Kalasiris (uzun keten elbise) ve altın takılar.", en: "Kalasiris (long linen dress) and gold jewelry." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/kadin-2.jpeg",
@@ -943,8 +931,8 @@
                     },
                     {
                         id: "egypt-man",
-                        title: "Erkek Kostümü",
-                        description: "Schenti (keten etek) ve pektoral süslemeler.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Schenti (keten etek) ve pektoral süslemeler.", en: "Schenti (linen kilt) and pectoral ornaments." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/erkek-2.jpeg",
@@ -957,8 +945,8 @@
                     },
                     {
                         id: "egypt-folk",
-                        title: "Halk Kostümü",
-                        description: "Sade keten giysiler ve basit takılar.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Sade keten giysiler ve basit takılar.", en: "Simple linen garments and basic jewelry." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/halk-2.jpeg",
@@ -969,8 +957,8 @@
                     },
                     {
                         id: "egypt-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Altın maskeler, uraeus sembollü başlıklar ve kraliyet kıyafetleri.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Altın maskeler, uraeus sembollü başlıklar ve kraliyet kıyafetleri.", en: "Gold masks, headdresses with uraeus symbols, and royal attire." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/saray-2.jpeg",
@@ -982,8 +970,8 @@
                     },
                     {
                         id: "egypt-soldier",
-                        title: "Asker Kostümü",
-                        description: "Bronz zırh ve savaş kıyafetleri.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Bronz zırh ve savaş kıyafetleri.", en: "Bronze armor and battle attire." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/antik-misir/asker-2.jpeg",
@@ -995,65 +983,71 @@
                 ]
             },
             romanEmpire: {
-                title: "Roma İmparatorluğu",
-                description: "Roma İmparatorluğu, geniş coğrafyası ve askeri gücüyle tanınırken, kostüm ve mimarisinde de bu özellikler yansımıştır. Toga ve stola gibi kıyafetler, sosyal statüyü belirtirken, kemerler, amfi tiyatrolar ve su kemerleri Roma mühendisliğinin harikalarıdır.",
+                title: { tr: "Roma İmparatorluğu", en: "Roman Empire" },
+                description: {
+                    tr: "Roma İmparatorluğu, geniş coğrafyası ve askeri gücüyle tanınırken, kostüm ve mimarisinde de bu özellikler yansımıştır. Toga ve stola gibi kıyafetler, sosyal statüyü belirtirken, kemerler, amfi tiyatrolar ve su kemerleri Roma mühendisliğinin harikalarıdır.",
+                    en: "The Roman Empire was known for its vast geography and military might, and these characteristics were reflected in its costume and architecture. Garments like the toga and stola indicated social status, while arches, amphitheaters, and aqueducts were wonders of Roman engineering."
+                },
                 subSections: [
-                    { id: "roman-woman", title: "Kadın Kostümü", description: "Stola (uzun elbise) ve palla (örtü).", images: [
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-2.jpeg", // Kullanıcının özel olarak belirttiği görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-3.jpeg", // Önceki eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-6.jpeg", // Yeni eklenen görsel
+                    { id: "roman-woman", title: { tr: "Kadın Kostümü", en: "Female Costume" }, description: { tr: "Stola (uzun elbise) ve palla (örtü).", en: "Stola (long dress) and palla (cloak)." }, images: [
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-2.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-3.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-6.jpeg",
                         "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-5.jpeg",
                         "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/kadin-7.jpeg"
                         ], currentImageIndex: 0
                     },
-                    { id: "roman-man", title: "Erkek Kostümü", description: "Toga ve tunica.", images: [
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-1.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-4.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-5.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-6.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-7.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-8.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-9.jpeg" // Yeni eklenen görsel
+                    { id: "roman-man", title: { tr: "Erkek Kostümü", en: "Male Costume" }, description: { tr: "Toga ve tunica.", en: "Toga and tunica." }, images: [
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-1.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-4.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-5.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-6.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-7.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-8.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/erkek-9.jpeg"
                         ], currentImageIndex: 0
                     },
-                    { id: "roman-folk", title: "Halk Kostümü", description: "Basit tunica ve sagum (pelerin).", images: [
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-1.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-2.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-3.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-4.jpeg" // Yeni eklenen görsel
+                    { id: "roman-folk", title: { tr: "Halk Kostümü", en: "Commoner Costume" }, description: { tr: "Basit tunica ve sagum (pelerin).", en: "Simple tunica and sagum (cloak)." }, images: [
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-1.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-2.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-3.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/halk-4.jpeg"
                         ], currentImageIndex: 0
                     },
-                    { id: "roman-palace", title: "Saray / Üst Sınıf Kostümü", description: "İmparator togas, altın lavriyeler ve kraliyet simgeleri.", images: [
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-1.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-3.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-4.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-5.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-6.jpeg" // Yeni eklenen görsel
+                    { id: "roman-palace", title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" }, description: { tr: "İmparator togas, altın lavriyeler ve kraliyet simgeleri.", en: "Imperial togas, golden laurels, and royal insignias." }, images: [
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-1.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-3.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-4.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-5.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/saray-6.jpeg"
                         ], currentImageIndex: 0
                     },
-                    { id: "roman-soldier", title: "Asker Kostümü", description: "Lorica segmentata (zırh) ve askeri üniforma.", images: [
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/asker-2.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/asker-3.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/asker-4.jpeg" // Yeni eklenen görsel
+                    { id: "roman-soldier", title: { tr: "Asker Kostümü", en: "Soldier Costume" }, description: { tr: "Lorica segmentata (zırh) ve askeri üniforma.", en: "Lorica segmentata (armor) and military uniform." }, images: [
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/asker-2.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/asker-3.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/asker-4.jpeg"
                         ], currentImageIndex: 0
                     },
-                    { id: "roman-architecture", title: "Mimari Temeller", description: "Kemerler, amfi tiyatrolar, su kemerleri ve tapınaklar Roma mühendisliğinin harikalarıdır.", images: [
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-1.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-2.jpeg", // Yeni eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-4.jpeg", // Önceki eklenen görsel
-                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-3.jpeg" // Yeni eklenen görsel
+                    { id: "roman-architecture", title: { tr: "Mimari Temeller", en: "Architectural Foundations" }, description: { tr: "Kemerler, amfi tiyatrolar, su kemerleri ve tapınaklar Roma mühendisliğinin harikalarıdır.", en: "Arches, amphitheaters, aqueducts, and temples are wonders of Roman engineering." }, images: [
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-1.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-2.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-4.jpeg",
+                        "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/roma/mimari-3.jpeg"
                         ], currentImageIndex: 0
                     }
                 ]
             },
             middleAges: {
-                title: "Orta Çağ",
-                description: "Orta Çağ, Avrupa tarihinde bin yıllık bir dönemi kapsar ve kostüm ile mimaride önemli değişimler yaşanmıştır. Şövalyeler, köylüler ve din adamlarının kıyafetleri farklılık gösterirken, gotik katedraller ve kaleler dönemin mimari şaheserleridir.",
+                title: { tr: "Orta Çağ", en: "Middle Ages" },
+                description: {
+                    tr: "Orta Çağ, Avrupa tarihinde bin yıllık bir dönemi kapsar ve kostüm ile mimaride önemli değişimler yaşanmıştır. Şövalyeler, köylüler ve din adamlarının kıyafetleri farklılık gösterirken, gotik katedraller ve kaleler dönemin mimari şaheserleridir.",
+                    en: "The Middle Ages span a thousand-year period in European history, marked by significant changes in costume and architecture. The clothing of knights, peasants, and clergy varied, while Gothic cathedrals and castles stand as architectural masterpieces of the era."
+                },
                 subSections: [
                     {
                         id: "medieval-woman",
-                        title: "Kadın Kostümü",
-                        description: "Uzun elbiseler, başörtüleri ve korse.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Uzun elbiseler, başörtüleri ve korse.", en: "Long dresses, head coverings, and corsets." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/kadin-2.jpeg",
@@ -1065,8 +1059,8 @@
                     },
                     {
                         id: "medieval-man",
-                        title: "Erkek Kostümü",
-                        description: "Tunik, hose ve cloak.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Tunik, hose ve cloak.", en: "Tunic, hose, and cloak." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/erkek-2.jpeg",
@@ -1077,8 +1071,8 @@
                     },
                     {
                         id: "medieval-folk",
-                        title: "Halk Kostümü",
-                        description: "Sade köylü kıyafetleri ve iş elbiseleri.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Sade köylü kıyafetleri ve iş elbiseleri.", en: "Simple peasant clothing and work attire." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/halk-2.jpeg",
@@ -1090,8 +1084,8 @@
                     },
                     {
                         id: "medieval-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Kraliyet elbiseleri, altın takılar ve ermin kürkleri.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Kraliyet elbiseleri, altın takılar ve ermin kürkleri.", en: "Royal gowns, gold jewelry, and ermine furs." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/saray-2.jpeg",
@@ -1104,8 +1098,8 @@
                     },
                     {
                         id: "medieval-soldier",
-                        title: "Asker Kostümü",
-                        description: "Zincir zırh ve şövalye kıyafetleri.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Zincir zırh ve şövalye kıyafetleri.", en: "Chainmail armor and knight's attire." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/orta-cag/asker-2.jpeg",
@@ -1118,13 +1112,16 @@
                 ]
             },
             renaissance: {
-                title: "Rönesans",
-                description: "Rönesans, Avrupa'da sanat, bilim ve kültürde yeniden doğuşu simgeler. Kostümlerde zengin kumaşlar ve detaylar öne çıkarken, mimaride klasik Roma ve Yunan etkileri görülür. Dönemin ünlü sanatçıları ve mimarları, insan figürünü ve oranlarını vurgulamıştır.",
+                title: { tr: "Rönesans", en: "Renaissance" },
+                description: {
+                    tr: "Rönesans, Avrupa'da sanat, bilim ve kültürde yeniden doğuşu simgeler. Kostümlerde zengin kumaşlar ve detaylar öne çıkarken, mimaride klasik Roma ve Yunan etkileri görülür. Dönemin ünlü sanatçıları ve mimarları, insan figürünü ve oranlarını vurgulamıştır.",
+                    en: "The Renaissance symbolizes a rebirth in art, science, and culture in Europe. Rich fabrics and intricate details were prominent in costumes, while classical Roman and Greek influences were seen in architecture. Famous artists and architects of the period emphasized the human figure and proportions."
+                },
                 subSections: [
                     {
                         id: "renaissance-woman",
-                        title: "Kadın Kostümü",
-                        description: "Farthingale etekleri, korset ve zengin süslemeler.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Farthingale etekleri, korset ve zengin süslemeler.", en: "Farthingale skirts, corsets, and rich embellishments." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/kadin-2.jpeg",
@@ -1136,8 +1133,8 @@
                     },
                     {
                         id: "renaissance-man",
-                        title: "Erkek Kostümü",
-                        description: "Doublet, hose ve ruff yakalık.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Doublet, hose ve ruff yakalık.", en: "Doublet, hose, and ruff collars." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/erkek-2.jpeg",
@@ -1149,8 +1146,8 @@
                     },
                     {
                         id: "renaissance-folk",
-                        title: "Halk Kostümü",
-                        description: "Basit tunikler ve etek kombinasyonları.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Basit tunikler ve etek kombinasyonları.", en: "Simple tunics and skirt combinations." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/halk-2.jpeg",
@@ -1161,8 +1158,8 @@
                     },
                     {
                         id: "renaissance-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Altın işlemeli kumaşlar ve mücevherler.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Altın işlemeli kumaşlar ve mücevherler.", en: "Gold-embroidered fabrics and jewels." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/saray-2.jpeg",
@@ -1178,8 +1175,8 @@
                     },
                     {
                         id: "renaissance-soldier",
-                        title: "Asker Kostümü",
-                        description: "Plate armor ve askeri dekorasyon.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Plate armor ve askeri dekorasyon.", en: "Plate armor and military decorations." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/asker-2.jpeg",
@@ -1190,8 +1187,8 @@
                     },
                     {
                         id: "renaissance-architecture",
-                        title: "Mimari Temeller",
-                        description: "Klasik Roma ve Yunan etkileri, simetri, oran ve perspektif vurgusu.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Klasik Roma ve Yunan etkileri, simetri, oran ve perspektif vurgusu.", en: "Classical Roman and Greek influences, emphasis on symmetry, proportion, and perspective." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/ronesans/mimari-2.jpeg",
@@ -1203,25 +1200,28 @@
                 ]
             },
             baroque: {
-                title: "Barok (17. YY)",
-                description: "Barok dönemi, 17. yüzyılda Avrupa'da ortaya çıkan ve gösterişli, dramatik ve abartılı tarzıyla bilinen bir sanat akımıdır. Kostümlerde büyük yakalar, kabarık etekler ve zengin işlemeler ön plandayken, mimaride kavisli hatlar, süslü cepheler ve altın varaklı detaylar dikkat çeker.",
+                title: { tr: "Barok (17. YY)", en: "Baroque (17th Century)" },
+                description: {
+                    tr: "Barok dönemi, 17. yüzyılda Avrupa'da ortaya çıkan ve gösterişli, dramatik ve abartılı tarzıyla bilinen bir sanat akımıdır. Kostümlerde büyük yakalar, kabarık etekler ve zengin işlemeler ön plandayken, mimaride kavisli hatlar, süslü cepheler ve altın varaklı detaylar dikkat çeker.",
+                    en: "The Baroque period, emerging in Europe in the 17th century, is an art movement known for its opulent, dramatic, and exaggerated style. In costumes, large collars, voluminous skirts, and rich embroideries were prominent, while architecture featured curved lines, ornate facades, and gilded details."
+                },
                 subSections: [
                     {
                         id: "baroque-woman",
-                        title: "Kadın Kostümü",
-                        description: "Mantua elbisesi, fontange başlığı ve büyük etekler.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Mantua elbisesi, fontange başlığı ve büyük etekler.", en: "Mantua dress, fontange headdress, and large skirts." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/kadin-2.jpeg",
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/barok/kadin-3.jpeg", // Güncellenen görsel
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/barok/kadin-3.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/kadin-4.jpeg"
                         ],
                         currentImageIndex: 0
                     },
                     {
                         id: "baroque-man",
-                        title: "Erkek Kostümü",
-                        description: "Justaucorps, peruk ve uzun yelekler.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Justaucorps, peruk ve uzun yelekler.", en: "Justaucorps, wigs, and long waistcoats." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/erkek-2.jpeg",
@@ -1232,8 +1232,8 @@
                     },
                     {
                         id: "baroque-folk",
-                        title: "Halk Kostümü",
-                        description: "Sade versiyonları ve günlük giysiler.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Sade versiyonları ve günlük giysiler.", en: "Simple versions and daily wear." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/halk-2.jpeg",
@@ -1244,8 +1244,8 @@
                     },
                     {
                         id: "baroque-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Altın işlemeli kumaşlar ve değerli taşlar.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Altın işlemeli kumaşlar ve değerli taşlar.", en: "Gold-embroidered fabrics and precious stones." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/saray-2.jpeg",
@@ -1256,8 +1256,8 @@
                     },
                     {
                         id: "baroque-soldier",
-                        title: "Asker Kostümü",
-                        description: "Dönem askeri üniformaları.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Dönem askeri üniformaları.", en: "Period military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/asker-2.jpeg",
@@ -1268,8 +1268,8 @@
                     },
                     {
                         id: "baroque-architecture",
-                        title: "Mimari Temeller",
-                        description: "Kavisli hatlar, süslü cepheler ve altın varaklı detaylar.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Kavisli hatlar, süslü cepheler ve altın varaklı detaylar.", en: "Curved lines, ornate facades, and gilded details." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/barok/mimari-2.jpeg",
@@ -1281,13 +1281,16 @@
                 ]
             },
             rococo: {
-                title: "Rokoko (18. YY Ortası)",
-                description: "Rokoko dönemi, 18. yüzyılın ortalarında Barok'un daha hafif, zarif ve süslü bir devamı olarak ortaya çıkmıştır. Kostümlerde pastel renkler, dantel detayları ve fırfırlar öne çıkarken, mimaride asimetrik tasarımlar, kıvrımlı hatlar ve incelikli süslemeler yaygındır.",
+                title: { tr: "Rokoko (18. YY Ortası)", en: "Rococo (Mid-18th Century)" },
+                description: {
+                    tr: "Rokoko dönemi, 18. yüzyılın ortalarında Barok'un daha hafif, zarif ve süslü bir devamı olarak ortaya çıkmıştır. Kostümlerde pastel renkler, dantel detayları ve fırfırlar öne çıkarken, mimaride asimetrik tasarımlar, kıvrımlı hatlar ve incelikli süslemeler yaygındır.",
+                    en: "The Rococo period emerged in the mid-18th century as a lighter, more elegant, and ornate continuation of the Baroque. In costumes, pastel colors, lace details, and ruffles were prominent, while architecture featured asymmetrical designs, curved lines, and delicate embellishments."
+                },
                 subSections: [
                     {
                         id: "rococo-woman",
-                        title: "Kadın Kostümü",
-                        description: "Robe à la française, pannier etekler ve zarif süslemeler.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Robe à la française, pannier etekler ve zarif süslemeler.", en: "Robe à la française, pannier skirts, and elegant embellishments." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/kadin-2.jpeg",
@@ -1299,8 +1302,8 @@
                     },
                     {
                         id: "rococo-man",
-                        title: "Erkek Kostümü",
-                        description: "Habit à la française, silk stockings ve zarif aksesuarlar.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Habit à la française, silk stockings ve zarif aksesuarlar.", en: "Habit à la française, silk stockings, and elegant accessories." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/erkek-2.jpeg",
@@ -1312,8 +1315,8 @@
                     },
                     {
                         id: "rococo-folk",
-                        title: "Halk Kostümü",
-                        description: "Sade günlük giysiler ve iş kıyafetleri.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Sade günlük giysiler ve iş kıyafetleri.", en: "Simple daily wear and work clothes." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/halk-2.jpeg",
@@ -1324,8 +1327,8 @@
                     },
                     {
                         id: "rococo-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Pastel renkli ipekler ve inci süslemeler.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Pastel renkli ipekler ve inci süslemeler.", en: "Pastel-colored silks and pearl embellishments." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/saray-2.jpeg",
@@ -1336,8 +1339,8 @@
                     },
                     {
                         id: "rococo-soldier",
-                        title: "Asker Kostümü",
-                        description: "Zarif askeri üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Zarif askeri üniformalar.", en: "Elegant military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/asker-2.jpeg",
@@ -1347,8 +1350,8 @@
                     },
                     {
                         id: "rococo-architecture",
-                        title: "Mimari Temeller",
-                        description: "Asimetrik tasarımlar, kıvrımlı hatlar ve incelikli süslemeler.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Asimetrik tasarımlar, kıvrımlı hatlar ve incelikli süslemeler.", en: "Asymmetrical designs, curved lines, and delicate embellishments." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/rokoko/mimari-2.jpeg",
@@ -1359,13 +1362,16 @@
                 ]
             },
             frenchRevolution: {
-                title: "Fransız İhtilali ve Regence",
-                description: "Fransız İhtilali, toplumsal ve siyasi değişimlerin yanı sıra kostüm ve mimaride de büyük dönüşümlere yol açmıştır. Regence döneminde daha sade ve klasik çizgiler benimsenirken, ihtilal sonrası giyimde sadelik ve eşitlik vurgusu öne çıkmıştır.",
+                title: { tr: "Fransız İhtilali ve Regence", en: "French Revolution and Regence" },
+                description: {
+                    tr: "Fransız İhtilali, toplumsal ve siyasi değişimlerin yanı sıra kostüm ve mimaride de büyük dönüşümlere yol açmıştır. Regence döneminde daha sade ve klasik çizgiler benimsenirken, ihtilal sonrası giyimde sadelik ve eşitlik vurgusu öne çıkmıştır.",
+                    en: "The French Revolution brought about major transformations in costume and architecture, alongside social and political changes. During the Regence period, simpler and more classical lines were adopted, while post-revolution clothing emphasized simplicity and equality."
+                },
                 subSections: [
                     {
                         id: "french-woman",
-                        title: "Kadın Kostümü",
-                        description: "Empire elbisesi, spencer ceket ve şal.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Empire elbisesi, spencer ceket ve şal.", en: "Empire dress, spencer jacket, and shawl." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/kadin-2.jpeg",
@@ -1378,8 +1384,8 @@
                     },
                     {
                         id: "french-man",
-                        title: "Erkek Kostümü",
-                        description: "Frac, pantolon ve yüksek yakalık.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Frac, pantolon ve yüksek yakalık.", en: "Frac, trousers, and high collars." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/erkek-2.jpeg",
@@ -1392,8 +1398,8 @@
                     },
                     {
                         id: "french-folk",
-                        title: "Halk Kostümü",
-                        description: "Devrimci sade giysiler ve sans-culotte.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Devrimci sade giysiler ve sans-culotte.", en: "Revolutionary simple garments and sans-culottes." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/halk-2.jpeg",
@@ -1403,8 +1409,8 @@
                     },
                     {
                         id: "french-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Empire tarzı saray elbiseleri ve neoklasik aksesuarlar.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Empire tarzı saray elbiseleri ve neoklasik aksesuarlar.", en: "Empire-style court dresses and neoclassical accessories." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/saray-2.jpeg",
@@ -1414,8 +1420,8 @@
                     },
                     {
                         id: "french-soldier",
-                        title: "Asker Kostümü",
-                        description: "Napolyonculuk dönem askeri üniformaları.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Napolyonculuk dönem askeri üniformaları.", en: "Napoleonic era military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/asker-2.jpeg",
@@ -1425,8 +1431,8 @@
                     },
                     {
                         id: "french-architecture",
-                        title: "Mimari Temeller",
-                        description: "Neoklasik mimari, sadelik ve antik Roma etkileri.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Neoklasik mimari, sadelik ve antik Roma etkileri.", en: "Neoclassical architecture, simplicity, and ancient Roman influences." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/fransiz-ihtilali/mimari-2.jpeg",
@@ -1437,26 +1443,29 @@
                 ]
             },
             victorian: {
-                title: "Viktorya (19. YY)",
-                description: "Viktorya dönemi, 19. yüzyılda İngiltere Kraliçesi Victoria'nın saltanatı sırasında yaşanan sosyal, kültürel ve ekonomik değişimlerle karakterize edilir. Kostümlerde korse, kabarık etekler ve dantel detayları yaygınken, mimaride neogotik ve neoklasik tarzlar öne çıkmıştır.",
+                title: { tr: "Viktorya (19. YY)", en: "Victorian (19th Century)" },
+                description: {
+                    tr: "Viktorya dönemi, 19. yüzyılda İngiltere Kraliçesi Victoria'nın saltanatı sırasında yaşanan sosyal, kültürel ve ekonomik değişimlerle karakterize edilir. Kostümlerde korse, kabarık etekler ve dantel detayları yaygınken, mimaride neogotik ve neoklasik tarzlar öne çıkmıştır.",
+                    en: "The Victorian era is characterized by social, cultural, and economic changes during the reign of Queen Victoria in 19th-century England. Corsets, voluminous skirts, and lace details were common in costumes, while Neo-Gothic and Neoclassical styles were prominent in architecture."
+                },
                 subSections: [
                     {
                         id: "victorian-woman",
-                        title: "Kadın Kostümü",
-                        description: "Crinoline etekler, corset ve yüksek yakalı bluzlar.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Crinoline etekler, corset ve yüksek yakalı bluzlar.", en: "Crinoline skirts, corsets, and high-necked blouses." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-2.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-3.jpeg",
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-4.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-5.jpeg" // Yeni eklenen görsel
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-4.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/kadin-5.jpeg"
                         ],
                         currentImageIndex: 0
                     },
                     {
                         id: "victorian-man",
-                        title: "Erkek Kostümü",
-                        description: "Morning coat, silindir şapka ve yelek.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Morning coat, silindir şapka ve yelek.", en: "Morning coat, top hat, and waistcoat." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnorya/erkek-2.jpeg",
@@ -1467,8 +1476,8 @@
                     },
                     {
                         id: "victorian-folk",
-                        title: "Halk Kostümü",
-                        description: "İşçi sınıfı günlük giysileri.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "İşçi sınıfı günlük giysileri.", en: "Working-class daily wear." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/halk-2.jpeg",
@@ -1479,8 +1488,8 @@
                     },
                     {
                         id: "victorian-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Kraliyet saray elbiseleri ve mücevherler.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Kraliyet saray elbiseleri ve mücevherler.", en: "Royal court dresses and jewels." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/saray-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/saray-2.jpeg",
@@ -1491,19 +1500,19 @@
                     },
                     {
                         id: "victorian-soldier",
-                        title: "Asker Kostümü",
-                        description: "İmparatorluk askeri üniformaları.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "İmparatorluk askeri üniformaları.", en: "Imperial military uniforms." },
                         images: [
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/asker-1.jpeg", // Mevcut görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/asker-2.jpeg", // Mevcut görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/asker-3.jpeg" // Yeni eklenen görsel
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/asker-1.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/asker-2.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/asker-3.jpeg"
                         ],
                         currentImageIndex: 0
                     },
                     {
                         id: "victorian-architecture",
-                        title: "Mimari Temeller",
-                        description: "Neogotik ve neoklasik tarzlar, endüstriyel devrimin etkisiyle yeni malzemeler.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Neogotik ve neoklasik tarzlar, endüstriyel devrimin etkisiyle yeni malzemeler.", en: "Neo-Gothic and Neoclassical styles, new materials influenced by the Industrial Revolution." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/viktorya/mimari-2.jpeg",
@@ -1515,13 +1524,16 @@
                 ]
             },
             artNouveau: {
-                title: "Art Nouveau / Belle Epoque",
-                description: "Art Nouveau ve Belle Epoque dönemleri, 19. yüzyılın sonu ve 20. yüzyılın başlarında sanat ve mimaride organik formlar, kıvrımlı çizgiler ve doğadan ilham alan süslemelerle karakterize edilir. Kostümlerde zarif siluetler ve akıcı kumaşlar öne çıkarken, mimaride demir ve cam kullanımı yaygınlaşmıştır.",
+                title: { tr: "Art Nouveau / Belle Epoque", en: "Art Nouveau / Belle Époque" },
+                description: {
+                    tr: "Art Nouveau ve Belle Epoque dönemleri, 19. yüzyılın sonu ve 20. yüzyılın başlarında sanat ve mimaride organik formlar, kıvrımlı çizgiler ve doğadan ilham alan süslemelerle karakterize edilir. Kostümlerde zarif siluetler ve akıcı kumaşlar öne çıkarken, mimaride demir ve cam kullanımı yaygınlaşmıştır.",
+                    en: "The Art Nouveau and Belle Époque periods, at the turn of the 19th and 20th centuries, are characterized by organic forms, curvilinear lines, and nature-inspired ornamentation in art and architecture. Elegant silhouettes and flowing fabrics were prominent in costumes, while the use of iron and glass became widespread in architecture."
+                },
                 subSections: [
                     {
                         id: "artnouveau-woman",
-                        title: "Kadın Kostümü",
-                        description: "S-line silüeti, Gibson Girl stili ve doğal formlar.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "S-line silüeti, Gibson Girl stili ve doğal formlar.", en: "S-line silhouette, Gibson Girl style, and natural forms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/kadin-2.jpeg",
@@ -1534,8 +1546,8 @@
                     },
                     {
                         id: "artnouveau-man",
-                        title: "Erkek Kostümü",
-                        description: "Lounge suit, boater şapka ve modern kesim.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Lounge suit, boater şapka ve modern kesim.", en: "Lounge suit, boater hat, and modern cut." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/erkek-2.jpeg",
@@ -1547,8 +1559,8 @@
                     },
                     {
                         id: "artnouveau-folk",
-                        title: "Halk Kostümü",
-                        description: "Günlük modern giysiler ve iş kıyafetleri.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Günlük modern giysiler ve iş kıyafetleri.", en: "Daily modern garments and work clothes." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/halk-2.jpeg",
@@ -1558,8 +1570,8 @@
                     },
                     {
                         id: "artnouveau-palace",
-                        title: "Saray / Üst Sınıf Kostümü",
-                        description: "Doğal motifler ve organik desenlerle süslü saray kıyafetleri.",
+                        title: { tr: "Saray / Üst Sınıf Kostümü", en: "Palace / Upper Class Costume" },
+                        description: { tr: "Doğal motifler ve organik desenlerle süslü saray kıyafetleri.", en: "Court attire adorned with natural motifs and organic patterns." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/houtecouture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/houtecouture-2.jpeg",
@@ -1570,8 +1582,8 @@
                     },
                     {
                         id: "artnouveau-soldier",
-                        title: "Asker Kostümü",
-                        description: "Modern askeri üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Modern askeri üniformalar.", en: "Modern military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/asker-2.jpeg",
@@ -1581,8 +1593,8 @@
                     },
                     {
                         id: "artnouveau-architecture",
-                        title: "Mimari Temeller",
-                        description: "Organik formlar, kıvrımlı çizgiler ve doğadan ilham alan süslemeler.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Organik formlar, kıvrımlı çizgiler ve doğadan ilham alan süslemeler.", en: "Organic forms, curvilinear lines, and nature-inspired ornamentation." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/art%20nouveau/mimari-2.jpeg",
@@ -1597,13 +1609,16 @@
                 ]
             },
             '1920s': {
-                title: "1920'ler (Caz Çağı)",
-                description: "1920'ler, caz müziği, flapper modası ve büyük toplumsal değişimlerle karakterize edilir. Kadın kostümlerde kısa etekler, düşük bel elbiseler ve boncuk işlemeler yaygınken, mimaride Art Deco tarzı ve modernleşme eğilimleri görülür.",
+                title: { tr: "1920'ler (Caz Çağı)", en: "1920s (Jazz Age)" },
+                description: {
+                    tr: "1920'ler, caz müziği, flapper modası ve büyük toplumsal değişimlerle karakterize edilir. Kadın kostümlerde kısa etekler, düşük bel elbiseler ve boncuk işlemeler yaygınken, mimaride Art Deco tarzı ve modernleşme eğilimleri görülür.",
+                    en: "The 1920s are characterized by jazz music, flapper fashion, and significant social changes. Short skirts, low-waisted dresses, and beadwork were common in women's costumes, while Art Deco style and modernization trends were seen in architecture."
+                },
                 subSections: [
                     {
                         id: "1920s-woman",
-                        title: "Kadın Kostümü",
-                        description: "Flapper elbisesi, kısa saçlar ve uzun boncuk kolyeler.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Flapper elbisesi, kısa saçlar ve uzun boncuk kolyeler.", en: "Flapper dress, short hair, and long beaded necklaces." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/kadin-2.jpeg",
@@ -1615,21 +1630,21 @@
                     },
                     {
                         id: "1920s-man",
-                        title: "Erkek Kostümü",
-                        description: "Oxford bags, suspenders ve bowtie.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Oxford bags, suspenders ve bowtie.", en: "Oxford bags, suspenders, and bowtie." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/erkek-2.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/erkek-3.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/erkek-4.jpeg",
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1920/erkek-5.jpeg" // Yeni eklenen görsel
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1920/erkek-5.jpeg"
                         ],
                         currentImageIndex: 0
                     },
                     {
                         id: "1920s-folk",
-                        title: "Halk Kostümü",
-                        description: "Günlük modern giysiler ve casual wear.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Günlük modern giysiler ve casual wear.", en: "Daily modern garments and casual wear." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/halk-2.jpeg",
@@ -1642,8 +1657,8 @@
                     },
                     {
                         id: "1920s-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Boncuklu elbiseler ve Art Deco aksesuarlar.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Boncuklu elbiseler ve Art Deco aksesuarlar.", en: "Beaded dresses and Art Deco accessories." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/houtecouture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/houtecouture-2.jpeg",
@@ -1656,8 +1671,8 @@
                     },
                     {
                         id: "1920s-soldier",
-                        title: "Asker Kostümü",
-                        description: "Savaş sonrası askeri üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Savaş sonrası askeri üniformalar.", en: "Post-war military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/asker-2.jpeg",
@@ -1671,8 +1686,8 @@
                     },
                     {
                         id: "1920s-architecture",
-                        title: "Mimari Temeller",
-                        description: "Art Deco tarzı ve modernleşme eğilimleri.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Art Deco tarzı ve modernleşme eğilimleri.", en: "Art Deco style and modernization trends." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1920/mimari-2.jpeg",
@@ -1683,13 +1698,16 @@
                 ]
             },
             '1940s': {
-                title: "1940'lar (Savaş Yılları)",
-                description: "1940'lar, II. Dünya Savaşı'nın etkisiyle kostüm ve mimaride pratiklik ve kısıtlamaların ön planda olduğu bir dönemdır. Kadın kostümlerde vatkalı omuzlar ve daha sade kesimler yaygınken, mimaride savaş sonrası yeniden yapılanma ve fonksiyonellik vurgulanmıştır.",
+                title: { tr: "1940'lar (Savaş Yılları)", en: "1940s (War Years)" },
+                description: {
+                    tr: "1940'lar, II. Dünya Savaşı'nın etkisiyle kostüm ve mimaride pratiklik ve kısıtlamaların ön planda olduğu bir dönemdır. Kadın kostümlerde vatkalı omuzlar ve daha sade kesimler yaygınken, mimaride savaş sonrası yeniden yapılanma ve fonksiyonellik vurgulanmıştır.",
+                    en: "The 1940s were a period dominated by practicality and restrictions in costume and architecture, influenced by World War II. Padded shoulders and simpler cuts were common in women's costumes, while post-war reconstruction and functionality were emphasized in architecture."
+                },
                 subSections: [
                     {
                         id: "1940s-woman",
-                        title: "Kadın Kostümü",
-                        description: "Savaş dönemi pratik giysiler ve New Look silüeti.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Savaş dönemi pratik giysiler ve New Look silüeti.", en: "Wartime practical garments and the New Look silhouette." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/kadin-2.jpeg",
@@ -1711,8 +1729,8 @@
                     },
                     {
                         id: "1940s-man",
-                        title: "Erkek Kostümü",
-                        description: "Savaş dönemi kısıtlı kumaşlarla yapılan takımlar.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Savaş dönemi kısıtlı kumaşlarla yapılan takımlar.", en: "Suits made with limited fabric during the war." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/erkek-2.jpeg",
@@ -1728,8 +1746,8 @@
                     },
                     {
                         id: "1940s-folk",
-                        title: "Halk Kostümü",
-                        description: "Savaş çabası için pratik iş giysileri.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Savaş çabası için pratik iş giysileri.", en: "Practical work clothes for the war effort." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/halk-2.jpeg",
@@ -1740,8 +1758,8 @@
                     },
                     {
                         id: "1940s-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Sınırlı lüks ve Dior New Look.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Sınırlı lüks ve Dior New Look.", en: "Limited luxury and Dior's New Look." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/houtecouture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/houtecouture-2.jpeg",
@@ -1761,8 +1779,8 @@
                     },
                     {
                         id: "1940s-soldier",
-                        title: "Asker Kostümü",
-                        description: "II. Dünya Savaşı askeri üniformaları.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "II. Dünya Savaşı askeri üniformaları.", en: "World War II military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/asker-2.jpeg",
@@ -1772,8 +1790,8 @@
                     },
                     {
                         id: "1940s-architecture",
-                        title: "Mimari Temeller",
-                        description: "Savaş sonrası yeniden yapılanma ve fonksiyonellik vurgusu.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Savaş sonrası yeniden yapılanma ve fonksiyonellik vurgusu.", en: "Emphasis on post-war reconstruction and functionality." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1940/mimari-2.jpeg",
@@ -1785,13 +1803,16 @@
                 ]
             },
             '1950s': {
-                title: "1950'ler (Rock'n Roll)",
-                description: "1950'ler, savaş sonrası iyileşme, rock'n roll müziği ve yeni moda akımlarıyla karakterize edilir. Kadın kostümlerde kabarık etekler, dar beller ve pastel renkler yaygınken, mimaride modernizm ve prefabrikasyon öne çıkmıştır.",
+                title: { tr: "1950'ler (Rock'n Roll)", en: "1950s (Rock'n Roll)" },
+                description: {
+                    tr: "1950'ler, savaş sonrası iyileşme, rock'n roll müziği ve yeni moda akımlarıyla karakterize edilir. Kadın kostümlerde kabarık etekler, dar beller ve pastel renkler yaygınken, mimaride modernizm ve prefabrikasyon öne çıkmıştır.",
+                    en: "The 1950s are characterized by post-war recovery, rock'n roll music, and new fashion trends. Voluminous skirts, narrow waists, and pastel colors were common in women's costumes, while modernism and prefabrication were prominent in architecture."
+                },
                 subSections: [
                     {
                         id: "1950s-woman",
-                        title: "Kadın Kostümü",
-                        description: "New Look etekleri, cinched waist ve petticoat.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "New Look etekleri, cinched waist ve petticoat.", en: "New Look skirts, cinched waist, and petticoat." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/kadin-2.jpeg",
@@ -1803,14 +1824,14 @@
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/kadin-8.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/kadin-9-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/kadin-9-2.jpeg",
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/kadin-9.jpeg" // Güncellenen görsel (11. sıra, index 10)
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/kadin-9.jpeg"
                         ],
                         currentImageIndex: 0
                     },
                     {
                         id: "1950s-man",
-                        title: "Erkek Kostümü",
-                        description: "Dar kesim takımlar ve rockabilly tarzı.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Dar kesim takımlar ve rockabilly tarzı.", en: "Slim-fit suits and rockabilly style." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/erkek-2.jpeg",
@@ -1822,8 +1843,8 @@
                     },
                     {
                         id: "1950s-folk",
-                        title: "Halk Kostümü",
-                        description: "Casual wear ve suburban giyim.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Casual wear ve suburban giyim.", en: "Casual wear and suburban attire." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/halk-2.jpeg",
@@ -1835,25 +1856,25 @@
                     },
                     {
                         id: "1950s-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Haute couture ve Hollywood glamuru.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Haute couture ve Hollywood glamuru.", en: "Haute couture and Hollywood glamour." },
                         images: [
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-1.jpeg", // Mevcut görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-2.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-3.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-4.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-5.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-6.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-7.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-8.jpeg", // Yeni eklenen görsel
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-9.jpeg" // Yeni eklenen görsel
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-1.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-2.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-3.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-4.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-5.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-6.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-7.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-8.jpeg",
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1950/hautecouture-9.jpeg"
                         ],
                         currentImageIndex: 0
                     },
                     {
                         id: "1950s-soldier",
-                        title: "Asker Kostümü",
-                        description: "Savaş sonrası askeri üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Savaş sonrası askeri üniformalar.", en: "Post-war military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/asker-2.jpeg",
@@ -1867,8 +1888,8 @@
                     },
                     {
                         id: "1950s-architecture",
-                        title: "Mimari Temeller",
-                        description: "Modernizm ve prefabrikasyon.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Modernizm ve prefabrikasyon.", en: "Modernism and prefabrication." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/main/1950/mimari-2.jpeg",
@@ -1880,13 +1901,16 @@
                 ]
             },
             '1970s': {
-                title: "1970'ler (Disco ve Hippie)",
-                description: "1970'ler, disco müziği, hippi kültürü ve özgürlükçü akımlarla karakterize edilir. Kostümlerde bol paça pantolonlar, platform ayakkabılar ve etnik desenler yaygınken, mimaride brutalizm ve postmodernizm etkileri görülür.",
+                title: { tr: "1970'ler (Disco ve Hippie)", en: "1970s (Disco and Hippie)" },
+                description: {
+                    tr: "1970'ler, disco müziği, hippi kültürü ve özgürlükçü akımlarla karakterize edilir. Kostümlerde bol paça pantolonlar, platform ayakkabılar ve etnik desenler yaygınken, mimaride brutalizm ve postmodernizm etkileri görülür.",
+                    en: "The 1970s are characterized by disco music, hippie culture, and libertarian movements. Bell-bottom pants, platform shoes, and ethnic patterns were common in costumes, while Brutalism and Postmodernism influences were seen in architecture."
+                },
                 subSections: [
                     {
                         id: "1970s-woman",
-                        title: "Kadın Kostümü",
-                        description: "Hippie elbiseler, bell-bottom pantolonlar ve bohem tarz.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Hippie elbiseler, bell-bottom pantolonlar ve bohem tarz.", en: "Hippie dresses, bell-bottom pants, and bohemian style." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/kadin-2.jpeg",
@@ -1897,8 +1921,8 @@
                     },
                     {
                         id: "1970s-man",
-                        title: "Erkek Kostümü",
-                        description: "Geniş yakalı gömlekler ve flare pantolonlar.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Geniş yakalı gömlekler ve flare pantolonlar.", en: "Wide-collared shirts and flare pants." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/erkek-2.jpeg",
@@ -1909,8 +1933,8 @@
                     },
                     {
                         id: "1970s-folk",
-                        title: "Halk Kostümü",
-                        description: "Casual bohem tarz ve doğal kumaşlar.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Casual bohem tarz ve doğal kumaşlar.", en: "Casual bohemian style and natural fabrics." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/halk-2.jpeg",
@@ -1921,8 +1945,8 @@
                     },
                     {
                         id: "1970s-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Disco glamuru ve Studio 54 tarzı.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Disco glamuru ve Studio 54 tarzı.", en: "Disco glamour and Studio 54 style." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/hautecouture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/hautecouture-2.jpeg",
@@ -1932,8 +1956,8 @@
                     },
                     {
                         id: "1970s-soldier",
-                        title: "Asker Kostümü",
-                        description: "Vietnam sonrası askeri üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Vietnam sonrası askeri üniformalar.", en: "Post-Vietnam military uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/asker-2.jpeg",
@@ -1943,8 +1967,8 @@
                     },
                     {
                         id: "1970s-architecture",
-                        title: "Mimari Temeller",
-                        description: "Brutalizm ve postmodernizm etkileri.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Brutalizm ve postmodernizm etkileri.", en: "Brutalism and Postmodernism influences." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1970/mimari-2.jpeg",
@@ -1956,13 +1980,16 @@
                 ]
             },
             '1980s': {
-                title: "1980'ler (Neşeli Yıllar)",
-                description: "1980'ler, pop kültürü, renkli giyim tarzları ve teknolojik gelişmelerle karakterize edilir. Kostümlerde vatkalı ceketler, neon renkler ve spor giysiler yaygınken, mimaride postmodernizm ve dekonstrüktivizm etkileri görülür.",
+                title: { tr: "1980'ler (Neşeli Yıllar)", en: "1980s (Joyful Years)" },
+                description: {
+                    tr: "1980'ler, pop kültürü, renkli giyim tarzları ve teknolojik gelişmelerle karakterize edilir. Kostümlerde vatkalı ceketler, neon renkler ve spor giysiler yaygınken, mimaride postmodernizm ve dekonstrüktivizm etkileri görülür.",
+                    en: "The 1980s are characterized by pop culture, colorful clothing styles, and technological advancements. Padded jackets, neon colors, and sportswear were common in costumes, while Postmodernism and Deconstructivism influences were seen in architecture."
+                },
                 subSections: [
                     {
                         id: "1980s-woman",
-                        title: "Kadın Kostümü",
-                        description: "Power dressing, shoulder pads ve neon renkler.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Power dressing, shoulder pads ve neon renkler.", en: "Power dressing, shoulder pads, and neon colors." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/kadin-2.jpeg",
@@ -1973,8 +2000,8 @@
                     },
                     {
                         id: "1980s-man",
-                        title: "Erkek Kostümü",
-                        description: "Double-breasted takımlar ve New Wave tarzı.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Double-breasted takımlar ve New Wave tarzı.", en: "Double-breasted suits and New Wave style." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/erkek-2.jpeg",
@@ -1985,8 +2012,8 @@
                     },
                     {
                         id: "1980s-folk",
-                        title: "Halk Kostümü",
-                        description: "Punk ve alternative kültür giyimi.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Punk ve alternative kültür giyimi.", en: "Punk and alternative culture clothing." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/halk-2.jpeg",
@@ -1997,8 +2024,8 @@
                     },
                     {
                         id: "1980s-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Haute couture ve lüks aşırılık.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Haute couture ve lüks aşırılık.", en: "Haute couture and luxury extravagance." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/hautecouture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/hautecouture-2.jpeg",
@@ -2009,8 +2036,8 @@
                     },
                     {
                         id: "1980s-soldier",
-                        title: "Asker Kostümü",
-                        description: "Soğuk Savaş dönemi üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Soğuk Savaş dönemi üniformalar.", en: "Cold War era uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/asker-2.jpeg",
@@ -2021,8 +2048,8 @@
                     },
                     {
                         id: "1980s-architecture",
-                        title: "Mimari Temeller",
-                        description: "Postmodernizm ve dekonstrüktivizm etkileri.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Postmodernizm ve dekonstrüktivizm etkileri.", en: "Postmodernism and deconstructivism influences." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/1980/mimari-2.jpeg",
@@ -2034,13 +2061,16 @@
                 ]
             },
             '21stCentury': {
-                title: "21. YY",
-                description: "21. yüzyıl, küreselleşme, teknoloji ve sürdürülebilirlik gibi kavramlarla şekilleniyor. Kostümlerde çeşitlilik ve kişisel ifade ön plandayken, mimaride akıllı binalar, yeşil tasarımlar ve dijitalleşme etkileri görülüyor.",
+                title: { tr: "21. YY", en: "21st Century" },
+                description: {
+                    tr: "21. yüzyıl, küreselleşme, teknoloji ve sürdürülebilirlik gibi kavramlarla şekilleniyor. Kostümlerde çeşitlilik ve kişisel ifade ön plandayken, mimaride akıllı binalar, yeşil tasarımlar ve dijitalleşme etkileri görülüyor.",
+                    en: "The 21st century is shaped by concepts such as globalization, technology, and sustainability. Diversity and personal expression are prominent in costumes, while smart buildings, green designs, and digitalization influences are seen in architecture."
+                },
                 subSections: [
                     {
                         id: "21st-woman",
-                        title: "Kadın Kostümü",
-                        description: "Grunge tarzı, slip dress ve minimalist kesimler.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Grunge tarzı, slip dress ve minimalist kesimler.", en: "Grunge style, slip dress, and minimalist cuts." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/kadin-2.jpeg",
@@ -2060,15 +2090,15 @@
                     },
                     {
                         id: "21st-man",
-                        title: "Erkek Kostümü",
-                        description: "Relaxed fit ve alternative tarz.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Relaxed fit ve alternative tarz.", en: "Relaxed fit and alternative style." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-2.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-3.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-4.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-5.jpeg",
-                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-6.jpg", // Yeni eklenen görsel
+                            "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-6.jpg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-7.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-8.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/erkek-9.jpeg"
@@ -2077,8 +2107,8 @@
                     },
                     {
                         id: "21st-folk",
-                        title: "Halk Kostümü",
-                        description: "Streetwear ve casual fashion.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Streetwear ve casual fashion.", en: "Streetwear and casual fashion." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/halk-2.jpeg",
@@ -2089,8 +2119,8 @@
                     },
                     {
                         id: "21st-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Minimalist lüks ve Calvin Klein estetiği.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Minimalist lüks ve Calvin Klein estetiği.", en: "Minimalist luxury and Calvin Klein aesthetic." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/houtecouture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/houtecouture-2.jpeg",
@@ -2103,8 +2133,8 @@
                     },
                     {
                         id: "21st-soldier",
-                        title: "Asker Kostümü",
-                        description: "Körfez Savaşı sonrası üniformalar.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Körfez Savaşı sonrası üniformalar.", en: "Post-Gulf War uniforms." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/asker-2.jpeg",
@@ -2114,8 +2144,8 @@
                     },
                     {
                         id: "21st-architecture",
-                        title: "Mimari Temeller",
-                        description: "Akıllı binalar, yeşil tasarımlar ve dijitalleşme etkileri.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Akıllı binalar, yeşil tasarımlar ve dijitalleşme etkileri.", en: "Smart buildings, green designs, and digitalization influences." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/21-yy/mimari-2.jpeg",
@@ -2125,14 +2155,17 @@
                     }
                 ]
             },
-            futureCentury: { // Changed from nearFuture to futureCentury
-                title: "Gelecek YY", // Changed title
-                description: "Gelecek yüzyıl, teknolojik yenilikler, sürdürülebilirlik ve kişiselleştirmenin ön planda olduğu bir dönem olacak. Kostümlerde akıllı kumaşlar, 3D baskı ve modüler tasarımlar yaygınlaşırken, mimaride sürdürülebilir şehirler, dikey çiftlikler ve akıllı ev sistemleri öne çıkacak.",
+            futureCentury: {
+                title: { tr: "Gelecek YY", en: "Future Century" },
+                description: {
+                    tr: "Gelecek yüzyıl, teknolojik yenilikler, sürdürülebilirlik ve kişiselleştirmenin ön planda olduğu bir dönem olacak. Kostümlerde akıllı kumaşlar, 3D baskı ve modüler tasarımlar yaygınlaşırken, mimaride sürdürülebilir şehirler, dikey çiftlikler ve akıllı ev sistemleri öne çıkacak.",
+                    en: "The coming century will be a period dominated by technological innovations, sustainability, and personalization. Smart fabrics, 3D printing, and modular designs will become widespread in costumes, while sustainable cities, vertical farms, and smart home systems will be prominent in architecture."
+                },
                 subSections: [
                     {
                         id: "future-woman",
-                        title: "Kadın Kostümü",
-                        description: "Sürdürülebilir moda ve tech-wear.",
+                        title: { tr: "Kadın Kostümü", en: "Female Costume" },
+                        description: { tr: "Sürdürülebilir moda ve tech-wear.", en: "Sustainable fashion and tech-wear." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/kadin-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/kadin-2.jpeg",
@@ -2144,8 +2177,8 @@
                     },
                     {
                         id: "future-man",
-                        title: "Erkek Kostümü",
-                        description: "Smart textiles ve adaptif giyim.",
+                        title: { tr: "Erkek Kostümü", en: "Male Costume" },
+                        description: { tr: "Smart textiles ve adaptif giyim.", en: "Smart textiles and adaptive clothing." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/erkek-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/erkek-2.jpeg",
@@ -2157,8 +2190,8 @@
                     },
                     {
                         id: "future-folk",
-                        title: "Halk Kostümü",
-                        description: "Pandemic fashion ve comfort wear.",
+                        title: { tr: "Halk Kostümü", en: "Commoner Costume" },
+                        description: { tr: "Pandemic fashion ve comfort wear.", en: "Pandemic fashion and comfort wear." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/halk-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/halk-2.jpeg",
@@ -2169,8 +2202,8 @@
                     },
                     {
                         id: "future-haute-couture",
-                        title: "Haute Couture Kostümü",
-                        description: "Luxury sustainability ve circular fashion.",
+                        title: { tr: "Haute Couture Kostümü", en: "Haute Couture Costume" },
+                        description: { tr: "Luxury sustainability ve circular fashion.", en: "Luxury sustainability and circular fashion." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/hautecoture-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/hautecoture-2.jpeg",
@@ -2182,8 +2215,8 @@
                     },
                     {
                         id: "future-soldier",
-                        title: "Asker Kostümü",
-                        description: "Gelecek teknolojisi askeri giysiler.",
+                        title: { tr: "Asker Kostümü", en: "Soldier Costume" },
+                        description: { tr: "Gelecek teknolojisi askeri giysiler.", en: "Future technology military garments." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/asker-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/asker-2.jpeg",
@@ -2195,8 +2228,8 @@
                     },
                     {
                         id: "future-architecture",
-                        title: "Mimari Temeller",
-                        description: "Sürdürülebilir şehirler, dikey çiftlikler ve akıllı ev sistemleri.",
+                        title: { tr: "Mimari Temeller", en: "Architectural Foundations" },
+                        description: { tr: "Sürdürülebilir şehirler, dikey çiftlikler ve akıllı ev sistemleri.", en: "Sustainable cities, vertical farms, and smart home systems." },
                         images: [
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/mimari-1.jpeg",
                             "https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/gelecek/mimari-2.jpeg",
@@ -2206,84 +2239,132 @@
                     }
                 ]
             },
-            soon: { // New section for "Yakında"
-                title: "Yakında",
-                description: "Bu bölümde farklı medeniyetlerin kostüm ve mimari tarihi hakkında bilgiler bulacaksınız. İçerikler yakında eklenecektir.",
+            soon: {
+                title: { tr: "Yakında", en: "Coming Soon" },
+                description: {
+                    tr: "Bu bölümde farklı medeniyetlerin kostüm ve mimari tarihi hakkında bilgiler bulacaksınız. İçerikler yakında eklenecektir.",
+                    en: "In this section, you will find information about the costume and architectural history of different civilizations. Content will be added soon."
+                },
                 subSections: [
                     {
                         id: "ottoman-empire",
-                        title: "Osmanlı İmparatorluğunu Keşfet",
-                        description: "Osmanlı İmparatorluğu'nun kostüm ve mimari tarihi yakında burada.",
-                        images: ["https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/osmanli.jpeg"], // Güncellenen görsel URL'si
+                        title: { tr: "Osmanlı İmparatorluğunu Keşfet", en: "Explore the Ottoman Empire" },
+                        description: { tr: "Osmanlı İmparatorluğu'nun kostüm ve mimari tarihi yakında burada.", en: "The costume and architectural history of the Ottoman Empire will be here soon." },
+                        images: ["https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/osmanli.jpeg"],
                         currentImageIndex: 0
                     },
                     {
                         id: "chinese-empire",
-                        title: "Çin İmparatorluğunu Keşfet",
-                        description: "Çin İmparatorluğu'nun kostüm ve mimari tarihi yakında burada.",
-                        images: ["https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/cin.jpeg"], // Yeni görsel URL'si eklendi
+                        title: { tr: "Çin İmparatorluğunu Keşfet", en: "Explore the Chinese Empire" },
+                        description: { tr: "Çin İmparatorluğu'nun kostüm ve mimari tarihi yakında burada.", en: "The costume and architectural history of the Chinese Empire will be here soon." },
+                        images: ["https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/cin.jpeg"],
                         currentImageIndex: 0
                     },
                     {
                         id: "native-american-civilization",
-                        title: "Kızılderili Uygarlığını Keşfet",
-                        description: "Kızılderili Uygarlığı'nın kostüm ve mimari tarihi yakında burada.",
-                        images: ["https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/kizilderili.jpeg"], // Yeni görsel URL'si eklendi
+                        title: { tr: "Kızılderili Uygarlığını Keşfet", en: "Explore Native American Civilization" },
+                        description: { tr: "Kızılderili Uygarlığı'nın kostüm ve mimari tarihi yakında burada.", en: "The costume and architectural history of Native American Civilization will be here soon." },
+                        images: ["https://raw.githubusercontent.com/algoritmikruya/sebnem/refs/heads/main/kizilderili.jpeg"],
                         currentImageIndex: 0
                     }
                 ]
             }
         };
 
-        let currentExpandedPeriodElement = null; // Currently expanded details section element
-        // let unsubscribeForum = null; // Dönem forumları kaldırıldığı için bu değişkene artık gerek yok
+        let currentExpandedPeriodElement = null;
+
+        // Function to update all translatable texts on the page
+        function updateTexts() {
+            // Update static texts using data-lang-key
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[key] && translations[key][currentLanguage]) {
+                    element.innerHTML = translations[key][currentLanguage];
+                }
+            });
+
+            // Update period titles and dates
+            for (const periodKey in periodData) {
+                const period = periodData[periodKey];
+                const titleElement = document.querySelector(`[data-lang-key="${periodKey}Title"]`);
+                const dateElement = document.querySelector(`[data-lang-key="${periodKey}Date"]`);
+                if (titleElement) {
+                    titleElement.textContent = period.title[currentLanguage];
+                }
+                if (dateElement) {
+                    dateElement.textContent = period.date ? period.date[currentLanguage] : ''; // Handle periods without dates
+                }
+            }
+
+            // Re-render the currently expanded period details if any
+            if (currentExpandedPeriodElement) {
+                const periodKey = currentExpandedPeriodElement.id.replace('-details-section', '');
+                // Close and reopen to force re-render with new language
+                currentExpandedPeriodElement.classList.remove('expanded');
+                setTimeout(() => {
+                    currentExpandedPeriodElement.innerHTML = ''; // Clear content
+                    window.togglePeriodDetails(periodKey, document.querySelector(`[onclick*="${periodKey}"]`));
+                }, 700); // Match CSS transition duration
+            }
+        }
+
+        // Function to toggle language
+        window.toggleLanguage = function() {
+            currentLanguage = (currentLanguage === 'tr' ? 'en' : 'tr');
+            document.documentElement.lang = currentLanguage; // Update html lang attribute
+            document.getElementById('languageToggle').textContent = currentLanguage.toUpperCase() + ' / ' + (currentLanguage === 'tr' ? 'ENG' : 'TR');
+            updateTexts();
+        }
+
+        // Initial text update on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTexts();
+        });
+
 
         // Dönem detaylarını gösteren/gizleyen fonksiyon
         window.togglePeriodDetails = function(periodKey, clickedCardElement) {
             const data = periodData[periodKey];
-            const targetDetailsSection = clickedCardElement.nextElementSibling; // Get the sibling details section
+            const targetDetailsSection = clickedCardElement.nextElementSibling;
 
-            // If the clicked period is already open, close it
+            // Eğer tıklanan dönem zaten açıksa, kapat
             if (currentExpandedPeriodElement === targetDetailsSection) {
                 targetDetailsSection.classList.remove('expanded');
                 setTimeout(() => {
-                    targetDetailsSection.innerHTML = ''; // Clear content after transition
-                    // Dönem forumları kaldırıldığı için unsubscribeForum çağrısına artık gerek yok
-                }, 700); // Match CSS transition duration
+                    targetDetailsSection.innerHTML = ''; // Geçişten sonra içeriği temizle
+                }, 700); // CSS geçiş süresiyle eşleşmeli
                 currentExpandedPeriodElement = null;
-                // window.currentExpandedPeriodKey = null; // Dönem forumları kaldırıldığı için bu değişkene artık gerek yok
                 return;
             }
 
-            // Close any currently open period details section
+            // Açık olan herhangi bir dönem detay bölümünü kapat
             if (currentExpandedPeriodElement) {
                 currentExpandedPeriodElement.classList.remove('expanded');
-                // Clear content of the previously expanded section after its transition
+                // Önceki genişletilmiş bölümün içeriğini geçişten sonra temizle
                 setTimeout(() => {
-                    if (currentExpandedPeriodElement) { // Check if it's still the previous one
+                    if (currentExpandedPeriodElement) {
                         currentExpandedPeriodElement.innerHTML = '';
                     }
-                    // Dönem forumları kaldırıldığı için unsubscribeForum çağrısına artık gerek yok
                 }, 700);
             }
 
             if (data) {
                 let detailsHtml = `
                     <div id="${periodKey}-details-content">
-                        <h2 class="text-3xl font-bold mb-4 text-gray-800">${data.title}</h2>
-                        <p class="text-gray-700 mb-8 leading-relaxed">${data.description}</p>
+                        <h2 class="text-3xl font-bold mb-4 text-gray-800">${data.title[currentLanguage]}</h2>
+                        <p class="text-gray-700 mb-8 leading-relaxed">${data.description[currentLanguage]}</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 `;
 
                 data.subSections.forEach(sub => {
                     // Görsel URL'si boşsa veya yoksa yer tutucu metin göster
-                    const imageUrl = sub.images && sub.images.length > 0 && sub.images[sub.currentImageIndex] ? sub.images[sub.currentImageIndex] : `https://placehold.co/300x200/CCCCCC/666666?text=Görsel+Yok`;
+                    const imageUrl = sub.images && sub.images.length > 0 && sub.images[sub.currentImageIndex] ? sub.images[sub.currentImageIndex] : `https://placehold.co/300x200/CCCCCC/666666?text=${translations.imageNotFound[currentLanguage].replace(' ', '+')}`;
                     detailsHtml += `
                         <div class="sub-section-card">
-                            <img id="img-${periodKey}-${sub.id}" src="${imageUrl}" alt="${sub.title} Görseli" class="rounded-md mb-3 cursor-pointer" onclick="window.openImageFullscreen(this.src)" onerror="this.src='https://placehold.co/300x200/CCCCCC/666666?text=Görsel+Yüklenemedi'; console.error('Görsel yüklenemedi: ' + this.src);">
-                            <h4 class="text-xl font-semibold mb-2 text-gray-700">${sub.title}</h4>
-                            <p class="text-gray-600 text-sm mb-3">${sub.description}</p>
-                            <button onclick="window.changeImage('${periodKey}', '${sub.id}')" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors text-sm">Görseli Değiştir</button>
+                            <img id="img-${periodKey}-${sub.id}" src="${imageUrl}" alt="${sub.title[currentLanguage]} Image" class="rounded-md mb-3 cursor-pointer" onclick="window.openImageFullscreen(this.src)" onerror="this.src='https://placehold.co/300x200/CCCCCC/666666?text=${translations.imageLoadError[currentLanguage].replace(' ', '+')}'; console.error('Görsel yüklenemedi: ' + this.src);">
+                            <h4 class="text-xl font-semibold mb-2 text-gray-700">${sub.title[currentLanguage]}</h4>
+                            <p class="text-gray-600 text-sm mb-3">${sub.description[currentLanguage]}</p>
+                            <button onclick="window.changeImage('${periodKey}', '${sub.id}')" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors text-sm">${translations.changeImageButton[currentLanguage]}</button>
                         </div>
                     `;
                 });
@@ -2294,93 +2375,11 @@
                 `;
                 targetDetailsSection.innerHTML = detailsHtml;
 
-                // Animate expansion
+                // Genişletmeyi canlandır
                 setTimeout(() => {
                     targetDetailsSection.classList.add('expanded');
-                    // Dönem forumları kaldırıldığı için loadForumPosts ve currentExpandedPeriodKey ayarlamalarına artık gerek yok
-                }, 50); // Small delay to trigger transition
+                }, 50); // Geçişi tetiklemek için küçük bir gecikme
                 currentExpandedPeriodElement = targetDetailsSection;
-            }
-        }
-
-        // Global Forum mesajlarını Firestore'dan yükleyen fonksiyon
-        window.loadGlobalForumPosts = function() {
-            if (!db || !isAuthReady) {
-                console.warn("Firestore veya kimlik doğrulama henüz hazır değil.");
-                return;
-            }
-
-            const forumMessagesContainer = document.getElementById(`global-forum-messages`);
-            if (!forumMessagesContainer) return;
-
-            forumMessagesContainer.innerHTML = '<p class="text-gray-500 text-center">Mesajlar yükleniyor...</p>';
-
-            // Unsubscribe from previous listener if exists
-            if (unsubscribeGlobalForum) {
-                unsubscribeGlobalForum();
-            }
-
-            const q = query(collection(db, `artifacts/${appId}/public/data/forum_posts`), orderBy("timestamp", "asc"));
-
-            unsubscribeGlobalForum = onSnapshot(q, (snapshot) => {
-                let messagesHtml = '';
-                let hasMessages = false;
-                snapshot.forEach((doc) => {
-                    const post = doc.data();
-                    // Global forum olduğu için periodKey filtresi kaldırıldı
-                    hasMessages = true;
-                    const date = post.timestamp ? new Date(post.timestamp.toDate()) : new Date();
-                    const timeString = date.toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' });
-                    messagesHtml += `
-                        <div class="forum-message">
-                            <div class="forum-message-header">
-                                <span class="forum-message-user">Kullanıcı</span>
-                                <span class="forum-message-time">${timeString}</span>
-                                </div>
-                            <p class="forum-message-text">${post.message}</p>
-                        </div>
-                    `;
-                });
-
-                if (!hasMessages) {
-                    messagesHtml = '<p class="text-gray-500 text-center">Bu forumda henüz mesaj yok. İlk mesajı siz gönderin!</p>';
-                }
-                forumMessagesContainer.innerHTML = messagesHtml;
-                // Scroll to bottom after loading new messages
-                forumMessagesContainer.scrollTop = forumMessagesContainer.scrollHeight;
-            }, (error) => {
-                console.error("Global Forum mesajları yüklenirken hata oluştu:", error);
-                forumMessagesContainer.innerHTML = '<p class="text-red-500 text-center">Mesajlar yüklenirken bir hata oluştu.</p>';
-            });
-        }
-
-        // Yeni global forum mesajı ekleyen fonksiyon
-        window.addGlobalForumPost = async function() {
-            if (!db || !isAuthReady) {
-                console.warn("Firestore veya kimlik doğrulama henüz hazır değil. Mesaj gönderilemiyor.");
-                console.error("Firestore veya kimlik doğrulama henüz hazır değil. Mesaj gönderilemiyor.");
-                return;
-            }
-
-            const messageInput = document.getElementById(`global-forum-input`);
-            const message = messageInput.value.trim();
-
-            if (message === "") {
-                console.error("Boş mesaj gönderilemez.");
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, `artifacts/${appId}/public/data/forum_posts`), {
-                    // periodKey kaldırıldı çünkü bu global forum
-                    userId: window.userId, // Use the authenticated user ID (still sent to backend)
-                    message: message,
-                    timestamp: serverTimestamp() // Firestore'un kendi zaman damgası
-                });
-                messageInput.value = ''; // Mesajı gönderdikten sonra inputu temizle
-            } catch (e) {
-                console.error("Mesaj eklenirken hata oluştu: ", e);
-                console.error("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
             }
         }
 
@@ -2394,7 +2393,7 @@
                  // Eğer görsel yoksa veya boşsa, yer tutucu görsel URL'si kullan
                 const imgElement = document.getElementById(`img-${periodKey}-${subSection.id}`);
                 if (imgElement) {
-                    imgElement.src = `https://placehold.co/300x200/CCCCCC/666666?text=Görsel+Yok`;
+                    imgElement.src = `https://placehold.co/300x200/CCCCCC/666666?text=${translations.imageNotFound[currentLanguage].replace(' ', '+')}`;
                 }
                 return;
             }
@@ -2404,7 +2403,7 @@
             if (imgElement) {
                 // Eğer görsel URL'si boşsa, placehold.co'dan bir yer tutucu görsel yükle
                 if (subSection.images[subSection.currentImageIndex] === "") {
-                    imgElement.src = `https://placehold.co/300x200/CCCCCC/666666?text=Görsel+Yok`;
+                    imgElement.src = `https://placehold.co/300x200/CCCCCC/666666?text=${translations.imageNotFound[currentLanguage].replace(' ', '+')}`;
                 } else {
                     imgElement.src = subSection.images[subSection.currentImageIndex];
                 }
@@ -2423,6 +2422,22 @@
         window.closeImageFullscreen = function() {
             const fullscreenModal = document.getElementById('fullscreenImageModal');
             fullscreenModal.style.display = 'none';
+        }
+
+        // About Modal'ı açan fonksiyon
+        window.openAboutModal = function() {
+            const aboutModal = document.getElementById('aboutModal');
+            if (aboutModal) {
+                aboutModal.style.display = 'flex';
+            }
+        }
+
+        // About Modal'ı kapatan fonksiyon
+        window.closeAboutModal = function() {
+            const aboutModal = document.getElementById('aboutModal');
+            if (aboutModal) {
+                aboutModal.style.display = 'none';
+            }
         }
 
         // Modalı dışarı tıklayarak kapatma
